@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JourneySoul Server</title>
+    <style>
+        body {
+            background-color: #333;
+            color: whitesmoke;
+            font-family: sans-serif;
+            padding-inline: 5rem;
+            padding-block: 2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1.3rem;
+        }
+
+        a {
+            font-size: 1.3rem;
+            color: whitesmoke;
+            text-decoration-color: whitesmoke;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        li {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-size: 2rem;
+            text-decoration: underline;
+            font-weight: 500;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to Our JourneySoul Server</h1>
+    <p>You can find all route form below. Go There and explore them</p>
+
+    <div>
+        <h3>User</h3>
+        <ul>
+            <li>Register(create new user) : <br> <a href="<%= baseUrl %>/api/users/register"> <%= baseUrl %>/api/users/register</a>
+                (POST)</li>
+            <li>Login : <br> <a href="<%= baseUrl %>/api/users/login"> <%= baseUrl %>/api/users/login</a> (POST)</li>
+            <li>Logout : <br> <a href="<%= baseUrl %>/api/users/logout"> <%= baseUrl %>/api/users/logout</a> (POST)</li>
+            <li>Get all users(only Admin can get) : <br> <a href="<%= baseUrl %>/api/users"> <%= baseUrl %>/api/users</a> (GET)</li>
+            <li>Get users by Id(Admin & indivisual user can get) : <br> <a href="<%= baseUrl %>/api/users/:userId">
+                    <%= baseUrl %>/api/users/:userId</a> (here every user has an indivisual _id field) (GET)</li>
+            <li>Update users by Id(Admin & indivisual user can update) : <br> <a href="<%= baseUrl %>/api/users/:userId">
+                    <%= baseUrl %>/api/users/:userId</a> (here every user has an indivisual _id field) (PATCH)</li>
+            <li>Delete users by Id(Admin & indivisual user can delete) : <br> <a href="<%= baseUrl %>/api/users/:userId">
+                    <%= baseUrl %>/api/users/:userId</a> (here every user has an indivisual _id field) (DELETE)</li>
+            <li>Profile : <br> <a href="<%= baseUrl %>/api/users/profile"> <%= baseUrl %>/api/users/profile</a> (GET)</li>
+            <li>Admin(Only Admin can get) : <br> <a href="<%= baseUrl %>/api/users/admin"> <%= baseUrl %>/api/users/admin</a> (GET)
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <h3>Blogs</h3>
+        <ul>
+            <li>Get all blogs (any logged in user can get) : <br> <a href="<%= baseUrl %>/api/blogs"> <%= baseUrl %>/api/blogs</a>
+                (GET)</li>
+            <li>Create new blogs (any logged in user can get) : <br> <a href="<%= baseUrl %>/api/blogs">
+                    <%= baseUrl %>/api/blogs</a> (POST)</li>
+            <li>Get blog by Id (any logged in user can get) : <br> <a href="<%= baseUrl %>/api/blogs/:blogId">
+                    <%= baseUrl %>/api/blogs/:blogId</a> (GET)</li>
+            <li>Update blogs by Id(Admin & indivisual user can update) : <br> <a href="<%= baseUrl %>/api/blogs/:blogId">
+                    <%= baseUrl %>/api/blogs/:blogId</a> (PATCH)</li>
+            <li>Delete blogs by Id(Admin & indivisual user can delete) : <br> <a href="<%= baseUrl %>/api/blogs/:blogId">
+                    <%= baseUrl %>/api/blogs/:blogId</a> (DELETE)</li>
+        </ul>
+    </div>
+
+    <div>
+        <h3>Likes and Comments</h3>
+        <ul>
+            <li>Like or Unlike a blogs (everyone can like or unlike) : <br> <a href="<%= baseUrl %>/api/blogs/:blogId/like">
+                    <%= baseUrl %>/api/blogs/:blogId/like</a> (POST)</li>
+            <li>Create a comment on a blogs (everyone can comment) : <br> <a href="<%= baseUrl %>/api/blogs/:blogId/comments">
+                    <%= baseUrl %>/api/blogs/:blogId/comments</a> (POST)</li>
+            <li>Get all comment on a blogs (everyone can get) : <br> <a href="<%= baseUrl %>/api/blogs/:blogId/comments">
+                    <%= baseUrl %>/api/blogs/:blogId/comments</a> (GET)</li>
+            <li>Update a comment on a blogs (admin and indivisual who comment can update) : <br> <a
+                    href="<%= baseUrl %>/api/blogs/:blogId/comments/:commentId">
+                    <%= baseUrl %>/api/blogs/:blogId/comments/:commentId</a> (PATCH)</li>
+            <li>Delete a comment on a blogs (admin and indivisual who comment can delete) : <br> <a
+                    href="<%= baseUrl %>/api/blogs/:blogId/comments/:commentId">
+                    <%= baseUrl %>/api/blogs/:blogId/comments/:commentId</a> (DELETE)</li>
+        </ul>
+    </div>
+</body>
+
+</html>
