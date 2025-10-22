@@ -23,7 +23,7 @@ userRouter.post("/register", async (req, res) => {
     res.status(201).json({
       message: "User registered successfully",
       data: {
-        id: user._id,
+        _id: user._id,
         name: user.name,
         email: user.email,
       },
@@ -67,7 +67,7 @@ userRouter.post("/login", async (req, res) => {
     res.status(200).json({
       message: "Login successful",
       data: {
-        id: user._id,
+        _id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,
@@ -133,7 +133,7 @@ userRouter.get(
       res.status(200).json({
         message: "User fetched successfully",
         data: {
-          id: user._id,
+          _id: user._id,
           name: user.name,
           email: user.email,
           role: user.role,
@@ -179,7 +179,7 @@ userRouter.patch(
       res.status(200).json({
         message: "User updated successfully",
         data: {
-          id: user._id,
+          _id: user._id,
           name: user.name,
           email: user.email,
           role: user.role,
@@ -222,7 +222,7 @@ userRouter.get("/profile", checkAuthentication, async (req, res) => {
   res.status(200).json({
     message: "User profile fetched",
     data: {
-      id: user._id,
+      _id: user._id,
       name: user.name,
       email: user.email,
       role: user.role,

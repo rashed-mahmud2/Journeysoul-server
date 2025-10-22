@@ -7,10 +7,17 @@ const blogRouter = express.Router();
 // 🟢 CREATE a new blog
 blogRouter.post("/", checkAuthentication, async (req, res) => {
   try {
-    const { title, content, image } = req.body;
+    const { title, content, image, category } = req.body;
     const author = req.user._id;
 
-    const blog = new Blog({ title, content, image, author });
+    // ✅ Validate required fields
+    if (!title || !content || !image || !category) {
+      return res.status(400).json({
+        message: "All fields are required (title, content, image, category)",
+      });
+    }
+
+    const blog = new Blog({ title, content, image, category, author });
     await blog.save();
 
     res.status(201).json({ message: "Blog created successfully", blog });
@@ -25,7 +32,11 @@ blogRouter.get("/", async (req, res) => {
     const blogs = await Blog.find()
       .populate("author", "name email")
       .sort({ createdAt: -1 });
-    res.status(200).json(blogs);
+    res.status(200).json({
+      message: "Blogs fetched successfully",
+      count: blogs.length,
+      data: blogs,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -89,7 +100,38 @@ blogRouter.delete("/:blogId", checkAuthentication, async (req, res) => {
 });
 
 
-// 🔴 liked or Unlike a blog 
+blogRouter.get("/category", async (req, res) => {
+  try {
+    const categories = await Blog.aggregate([
+      {
+        $group: {
+          _id: "$category", 
+          count: { $sum: 1 }, 
+          blogIds: { $push: "$_id" }, 
+        },
+      },
+      { $sort: { count: -1 } }, 
+      {
+        $project: {
+          _id: 0,
+          category: "$_id", 
+          count: 1,
+          blogIds: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      message: "Blogs grouped by category",
+      totalCategories: categories.length,
+      categories,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// 🔴 liked or Unlike a blog
 blogRouter.post("/:blogId/like", checkAuthentication, async (req, res) => {
   const { blogId } = req.params;
   const userId = req.user._id;
@@ -122,7 +164,6 @@ blogRouter.post("/:blogId/like", checkAuthentication, async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 });
-
 
 // 🟢 POST a comment
 blogRouter.post("/:blogId/comments", checkAuthentication, async (req, res) => {
