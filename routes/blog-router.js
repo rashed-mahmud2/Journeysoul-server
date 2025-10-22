@@ -100,37 +100,6 @@ blogRouter.delete("/:blogId", checkAuthentication, async (req, res) => {
 });
 
 
-blogRouter.get("/category", async (req, res) => {
-  try {
-    const categories = await Blog.aggregate([
-      {
-        $group: {
-          _id: "$category", 
-          count: { $sum: 1 }, 
-          blogIds: { $push: "$_id" }, 
-        },
-      },
-      { $sort: { count: -1 } }, 
-      {
-        $project: {
-          _id: 0,
-          category: "$_id", 
-          count: 1,
-          blogIds: 1,
-        },
-      },
-    ]);
-
-    res.status(200).json({
-      message: "Blogs grouped by category",
-      totalCategories: categories.length,
-      categories,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
 // 🔴 liked or Unlike a blog
 blogRouter.post("/:blogId/like", checkAuthentication, async (req, res) => {
   const { blogId } = req.params;

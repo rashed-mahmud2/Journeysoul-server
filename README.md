@@ -37,7 +37,6 @@ Content-type: application/json
 - [Blog Routes](https://journeysoul-server.onrender.com/api/blogs)
 - [Like Unlike Route](https://journeysoul-server.onrender.com/api/blogs/:blogId/like)
 - [Comment Route](https://journeysoul-server.onrender.com/api/blogs/:blogId/comments)
-- [Category of Blogs](https://journeysoul-server.onrender.com/api/blogs/category)
 
 ---
 
