@@ -4,8 +4,16 @@ const dotenv = require("dotenv");
 const path = require("path");
 const userRouter = require("./routes/user-router");
 const blogRouter = require("./routes/blog-router");
+const cors = require("cors");
 
 const app = express();
+
+// TODO: Update origin before production
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 dotenv.config({ path: path.join(__dirname, "./.env") });
 
