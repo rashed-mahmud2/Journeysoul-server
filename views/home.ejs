@@ -64,9 +64,7 @@
                     <%= baseUrl %>/api/users/:userId</a> (here every user has an indivisual _id field) (PATCH)</li>
             <li>Delete users by Id(Admin & indivisual user can delete) : <br> <a href="<%= baseUrl %>/api/users/:userId">
                     <%= baseUrl %>/api/users/:userId</a> (here every user has an indivisual _id field) (DELETE)</li>
-            <li>Profile : <br> <a href="<%= baseUrl %>/api/users/profile"> <%= baseUrl %>/api/users/profile</a> (GET)</li>
-            <li>Admin(Only Admin can get) : <br> <a href="<%= baseUrl %>/api/users/admin"> <%= baseUrl %>/api/users/admin</a> (GET)
-            </li>
+            <li>Profile (any authenticated users can visit any profile) : <br> <a href="<%= baseUrl %>/api/users/:userId/profile"> <%= baseUrl %>/api/users/:userId/profile</a> (GET)</li>
         </ul>
     </div>
 

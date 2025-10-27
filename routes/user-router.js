@@ -1,6 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
 const User = require("../models/user.model");
+const Blog = require("../models/blog.model");
 const { generateToken } = require("../services/token.services");
 const moment = require("moment");
 const {
@@ -217,27 +218,37 @@ userRouter.delete(
 );
 
 // --------------------- PROFILE ---------------------
-userRouter.get("/profile", checkAuthentication, async (req, res) => {
-  const user = req.user;
-  res.status(200).json({
-    message: "User profile fetched",
-    data: {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      isSuspended: user.isSuspended,
-    },
-  });
-});
-
-// --------------------- ADMIN ONLY ROUTE ---------------------
 userRouter.get(
-  "/admin",
-  checkAuthentication,
-  checkAuthorization,
+  "/:userId/profile",
+  checkAuthentication, // ✅ first check token
   async (req, res) => {
-    res.status(200).json({ message: "Admin only access" });
+    try {
+      const { userId } = req.params;
+
+      // ✅ Find user
+      const user = await User.findById(userId).select("-password");
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // ✅ Find all blogs by that user
+      const blogs = await Blog.find({ author: userId }).sort({ createdAt: -1 });
+
+      // ✅ Count total blogs
+      const blogCount = blogs.length;
+
+      res.status(200).json({
+        message: "User profile and blogs fetched successfully",
+        data: {
+          user,
+          blogCount,
+          blogs,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
   }
 );
 
